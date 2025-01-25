@@ -4,7 +4,7 @@ public class Player
 {
     public string Name { get; set; }
     public Room CurrentRoom { get; set; }
-    public List<Item> Items { get; set; } = new List<Item>();
+    public Inventory Inventory { get; set; } = new Inventory();
 
     public Player(string name, Room startingRoom)
     {
