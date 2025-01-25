@@ -5,8 +5,8 @@
         public string Name { get; set; }
         public string Description { get; set; }
         public Dictionary<string, Room> Exits { get; set; }
-        
         public List<Item> Items { get; set; } = new List<Item>();
+        public List<NPC> NPCs { get; set; } = new List<NPC>();
 
         public Room(string name, string description)
         {

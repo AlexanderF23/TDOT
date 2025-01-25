@@ -83,6 +83,11 @@ public class GameEngine
                     if (item != null)
                     {
                         Console.WriteLine($"You used {item.Name}.");
+                        
+                        if (item.Name.ToLower() == "key")
+                        {
+                            Console.WriteLine("You unlocked the door!");
+                        }
                     }
                     else
                     {
@@ -94,7 +99,70 @@ public class GameEngine
                     Console.WriteLine("You must specify an item to use.");
                 }
                 break;
-                
+            
+            case "talk":
+                if (words.Length > 1)
+                {
+                    var npcName = string.Join(" ", words.Skip(1));
+                    var npc = _player.CurrentRoom.NPCs.FirstOrDefault(n => n.Name.ToLower() == npcName.ToLower());
+                    if (npc != null)
+                    {
+                        npc.Speak();
+                    }
+                    else
+                    {
+                        Console.WriteLine("There's no one here by that name.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("You must specify an NPC to talk to.");
+                }
+                break;
+            
+            case "inspect":
+                if (words.Length > 1)
+                {
+                    var npcName = string.Join(" ", words.Skip(1));
+                    var npc = _player.CurrentRoom.NPCs.FirstOrDefault(n => n.Name.ToLower() == npcName.ToLower());
+                    if (npc != null)
+                    {
+                        Console.WriteLine($"{npc.Name}: {npc.Description}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("There's no one here by that name.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("You must specify an NPC to inspect.");
+                }
+                break;
+                    
+            
+            case "attack":
+                if (words.Length > 1)
+                {
+                    var npcName = string.Join("", words.Skip(1));
+                    var npc = _player.CurrentRoom.NPCs.FirstOrDefault(n => n.Name.ToLower() == npcName.ToLower());
+                    if (npc != null)
+                    {
+                        Console.WriteLine($"You attack {npc.Name}!");
+                    }
+                    else
+                    {
+                        Console.WriteLine("There's no one here by that name.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("You must specify an NPC to attack.");
+                }
+                break;
+
+
+
             case "help":
                 Console.WriteLine("available commands:");
                 Console.WriteLine("- look: inspect the room");
