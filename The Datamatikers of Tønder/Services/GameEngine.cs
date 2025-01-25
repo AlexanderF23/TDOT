@@ -48,27 +48,7 @@ public class GameEngine
                     Console.WriteLine("You can't go that way");
                 }
                 break;
-
-            case "take":
-                if (words.Length > 1)
-                {
-                    var itemName = string.Join(" ", words.Skip(1));
-                    var item = _player.CurrentRoom.Items.FirstOrDefault(i => i.Name.ToLower() == itemName.ToLower());
-                    if (item != null)
-                    {
-                        _player.Inventory.addItem(item);
-                        _player.CurrentRoom.Items.Remove(item);
-                    }
-                    else
-                    {
-                        Console.WriteLine("There's no item in this room.");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("You must specify an item to take.");
-                }
-                break;
+            
             
             case "inventory":
                 _player.Inventory.ShowInventory();
@@ -160,8 +140,56 @@ public class GameEngine
                     Console.WriteLine("You must specify an NPC to attack.");
                 }
                 break;
+            
+            case "open":
+                if (words.Length > 1)
+                {
+                    var containerName = string.Join(" ", words.Skip(1));
+                    var container = _player.CurrentRoom.Containers.FirstOrDefault(c => c.Name.ToLower() == containerName.ToLower());
+                    if (container != null)
+                    {
+                        container.Open(_player);
+                    }
+                    else
+                    {
+                        Console.WriteLine("There's no such container here.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("open WHAT?");
+                }
+                break;
+            
+            case "take":
+                if (words.Length > 2 && words[1].ToLower() == "from")
+                {
+                    var itemName = string.Join(" ", words.Skip(3));
+                    var containerName = words[2];
+                    var container = _player.CurrentRoom.Containers.FirstOrDefault(c => c.Name.ToLower() == containerName.ToLower());
+                    
+                    if (container != null)
+                    {
+                        var item = container.Items.FirstOrDefault(i => i.Name.ToLower() == itemName.ToLower());
+                        if (item != null)
+                        {
+                            _player.Inventory.addItem(item);
+                            container.Items.Remove(item);
+                            Console.WriteLine($"You took {item.Name} from the {container.Name}.");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"the {container.Name} does not contain that item.");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("There's no such container here.");
+                    }
+                }
 
-
+                break;
+            
 
             case "help":
                 Console.WriteLine("available commands:");
