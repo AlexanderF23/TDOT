@@ -121,6 +121,8 @@ public class GameEngine
                 break;
                     
             
+            
+            
             case "attack":
                 if (words.Length > 1)
                 {
@@ -129,6 +131,8 @@ public class GameEngine
                     if (npc != null)
                     {
                         Console.WriteLine($"You attack {npc.Name}!");
+                        _player.GainExperience(5);
+                        _player.CurrentRoom.NPCs.Remove(npc);
                     }
                     else
                     {
@@ -140,6 +144,11 @@ public class GameEngine
                     Console.WriteLine("You must specify an NPC to attack.");
                 }
                 break;
+            
+            
+            
+            
+            
             
             case "open":
                 if (words.Length > 1)
@@ -190,6 +199,13 @@ public class GameEngine
 
                 break;
             
+            
+            
+            case "stats":
+                Console.WriteLine($"Level: {_player.Level}");
+                Console.WriteLine($"XP: {_player.Experience}/{_player.ExperienceToNextLevel}");
+                break;
+
 
             case "help":
                 Console.WriteLine("available commands:");
