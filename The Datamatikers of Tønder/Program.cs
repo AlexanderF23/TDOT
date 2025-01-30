@@ -17,7 +17,8 @@ class Program
         //container
         var taske = new Containers("Taske", "En taske til at opbevare dine ting i.", isLocked: false, keyName: "TaskeNøgle");
         taske.Items.Add(new Item("Blyant", "En blyant til at skrive med."));
-        
+        //enemy
+        undervisningslokale.Enemies.Add(new GymnasieElev());
         undervisningslokale.NPCs.Add(erik);
         undervisningslokale.Containers.Add(taske);
         

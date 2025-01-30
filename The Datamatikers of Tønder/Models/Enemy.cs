@@ -1,6 +1,6 @@
 ﻿namespace The_Datamatikers_of_Tønder.Models;
 
-public class Enemy
+public abstract class Enemy
 {
     public string Name { get; set; }
     public int Health { get; set; }
@@ -15,7 +15,7 @@ public class Enemy
         ExperienceReward = experienceReward;
     }
 
-    public void TakeDamage(int damage)
+    public virtual void TakeDamage(int damage)
     {
         Health -= damage;
         Console.WriteLine($"{Name} took {damage} damage!. Current health: {Health}");
@@ -26,9 +26,32 @@ public class Enemy
         }
     }
     
-    public void Attack(Player player)
+    public virtual void Attack(Player player)
     {
         Console.WriteLine($"{Name} attacks you for {AttackPower} damage!");
         player.TakeDamage(AttackPower);
+    }
+}
+
+public class GymnasieElev : Enemy
+{
+    public GymnasieElev() : base("GymnasieElev", 5, 1, 5){ }
+
+    public override void Attack(Player player)
+    {
+        Console.WriteLine($"{Name} Slår ud efter dig!");
+        base.Attack(player);
+    }
+  
+}
+
+public class Pedel : Enemy
+{
+    public Pedel() : base("Pedel", 20, 7, 10){ }
+
+    public override void Attack(Player player)
+    {
+        Console.WriteLine($"{Name} Slår ud efter dig med sin kost!");
+        base.Attack(player);
     }
 }
