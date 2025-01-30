@@ -7,6 +7,7 @@ public class Containers
     public bool IsLocked { get; set; } = false;
     public string KeyName { get; set; } // Name of the key that unlocks the container
     public List<Item> Items { get; set; } = new List<Item>();
+
     public Containers(string name, string description, bool isLocked = false, string keyName = null)
     {
         Name = name;
@@ -16,7 +17,6 @@ public class Containers
         Items = new List<Item>();
     }
 
-
     public void Open(Player player)
     {
         if (IsLocked)
@@ -24,20 +24,18 @@ public class Containers
             Console.WriteLine($"The {Name} is locked. You need a {KeyName} to unlock it.");
             return;
         }
-        
-        if (Item.Count > 0)
+
+        if (Items.Count > 0)
         {
-            Console.WriteLine($"you open the {Name} and find the following items:");
+            Console.WriteLine($"You open the {Name} and find the following items:");
             foreach (var item in Items)
             {
-                Console.WriteLine($"-{item.Name}");
+                Console.WriteLine($"- {item.Name}");
             }
         }
         else
         {
             Console.WriteLine($"There are no items in the {Name}.");
         }
-
     }
-    }
-    
+}

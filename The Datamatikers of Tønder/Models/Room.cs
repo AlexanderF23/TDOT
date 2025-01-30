@@ -8,8 +8,7 @@
         public List<Item> Items { get; set; } = new List<Item>();
         public List<NPC> NPCs { get; set; } = new List<NPC>();
         public List<Containers> Containers { get; set; } = new List<Containers>();
-        
-        
+        public List<Enemy> Enemies { get; set; } = new List<Enemy>();
         public Room(string name, string description)
         {
             Name = name;

@@ -126,22 +126,32 @@ public class GameEngine
             case "attack":
                 if (words.Length > 1)
                 {
-                    var npcName = string.Join("", words.Skip(1));
-                    var npc = _player.CurrentRoom.NPCs.FirstOrDefault(n => n.Name.ToLower() == npcName.ToLower());
-                    if (npc != null)
+                    var enemyName = string.Join(" ", words.Skip(1));
+                    var enemy = _player.CurrentRoom.Enemies.FirstOrDefault(e =>
+                        e.Name.ToLower() == enemyName.ToLower());
+
+                    if (enemy != null)
                     {
-                        Console.WriteLine($"You attack {npc.Name}!");
-                        _player.GainExperience(5);
-                        _player.CurrentRoom.NPCs.Remove(npc);
+                        Console.WriteLine($"You attack {enemy.Name}!");
+
+                        // Player attacks enemy
+                        enemy.TakeDamage(_player.AttackPower);
+
+                        // if enemy dies
+                        if (enemy.Health <= 0)
+                        {
+                            _player.GainExperience(enemy.ExperienceReward);
+                            _player.CurrentRoom.Enemies.Remove(enemy);
+                        }
                     }
                     else
                     {
-                        Console.WriteLine("There's no one here by that name.");
+                        Console.WriteLine("There's no enemy here by that name.");
                     }
                 }
                 else
                 {
-                    Console.WriteLine("You must specify an NPC to attack.");
+                    Console.WriteLine("You must specify an enemy to attack.");
                 }
                 break;
             
