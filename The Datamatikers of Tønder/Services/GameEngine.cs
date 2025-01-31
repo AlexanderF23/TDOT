@@ -38,20 +38,42 @@ public class GameEngine
             
             
             case "go":
-                if (words.Length > 1 && _player.CurrentRoom.Exits.ContainsKey(words[1]))
+                if (words.Length > 1)
                 {
-                    _player.CurrentRoom = _player.CurrentRoom.Exits[words[1]];
-                    Console.WriteLine($"you enter {_player.CurrentRoom.Name}");
+                    var direction = words[1].ToLower();
+                    if (_player.CurrentRoom.Exits.ContainsKey(direction))
+                    {
+                        var nextRoom = _player.CurrentRoom.Exits[direction];
+
+                        if (nextRoom.IsLocked)
+                        {
+                            if (nextRoom.TryUnlock(_player))
+                            {
+                                _player.CurrentRoom = nextRoom;
+                                Console.WriteLine($"You enter {nextRoom.Name}.");
+                                Console.WriteLine(nextRoom.Description);
+                            }
+                            else
+                            {
+                                Console.WriteLine($"The {nextRoom.Name} is locked. You need a {nextRoom.RequiredKey}.");
+                            }
+                        }
+                        else
+                        {
+                            _player.CurrentRoom = nextRoom;
+                            Console.WriteLine($"You enter {nextRoom.Name}.");
+                            Console.WriteLine(nextRoom.Description);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("You can't go that way!");
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("You can't go that way");
+                    Console.WriteLine("Go where?");
                 }
-                break;
-            
-            
-            case "inventory":
-                _player.Inventory.ShowInventory();
                 break;
             
             
