@@ -53,11 +53,13 @@ class Program
         var computer = new Item("Computer", "En computer til at programmere på.");
         var papir = new Item("Papir", "Papir til at skrive noter på.");
         var banan = new Item("Banan", "En banan til at spise.");
+        var key1 = new Item("Kontor-Nøgle", "En Nøgle til at låse op for Kontoret.");
         
         undervisningslokale.Items.Add(computer);
         undervisningslokale.Items.Add(vrheadset);
         kantinelokale.Items.Add(banan);
         kontor.Items.Add(papir);
+        cykelskur.Items.Add(key1);
         
         
         //beholder i undervisningslokale
@@ -65,13 +67,15 @@ class Program
         taske.Items.Add(blyant);
         undervisningslokale.Containers.Add(taske);
         
-        
+        //Quest
+        var FindeKeyQuest = new Quest("Find nøglen", "Find nøglen til at låse op for kontor.", "Nøgle");
         
         //enemy
         kantinelokale.Enemies.Add(new GymnasieElev());
         kælderen.Enemies.Add(new Pedel());
         
-        
+        //NPC
+        var erik = new NPC("Erik", "Din underviser", "Hej, jeg er din underviser. jeg har tabt min Nøgle til mit kontor", quest: FindeKeyQuest, key1);
         
         var player = new Player("Hero", cykelskur);
         var gameEngine = new GameEngine(player);

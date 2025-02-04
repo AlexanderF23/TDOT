@@ -122,6 +122,27 @@ public class GameEngine
                 }
                 break;
             
+            
+            case "Complete":
+                if (words.Length > 1)
+                {
+                    var npcName = string.Join(" ", words.Skip(1));
+                    var npc = _player.CurrentRoom.NPCs.FirstOrDefault(n => n.Name.ToLower() == npcName.ToLower());
+                    if (npc != null)
+                    {
+                        npc.CheckQuestCompletion(_player);
+                    }
+                    else
+                    {
+                        Console.WriteLine("There's no one here by that name.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("You must specify an NPC to talk to.");
+                }
+                break;
+            
             case "inspect":
                 if (words.Length > 1)
                 {
